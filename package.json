@@ -6,7 +6,7 @@
   "author": "pubkey",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pubkey/rxdb-server"
+    "url": "https://github.com/TimotheFCN/rxdb-server"
   },
   "homepage": "https://rxdb.info/rx-server.html",
   "keywords": [
