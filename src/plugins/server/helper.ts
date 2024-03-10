@@ -29,6 +29,7 @@ export function setCors(
     if (useCors) {
         server.expressApp.options('/' + path + '/*', expressCors({
             origin: useCors,
+            credentials: true,
             // some legacy browsers (IE11, various SmartTVs) choke on 204
             optionsSuccessStatus: 200
         }));
