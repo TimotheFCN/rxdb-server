@@ -21,10 +21,9 @@ export type RxServerOptions<AuthType> = {
     port: number;
     /**
      * Set a origin for allowed CORS requests.
-     * Can be overwritten by the cors option of the endpoints.
      * [default='*']
      */
-    cors?: '*' | string;
+    origin?: '*' | string;
 };
 
 export type RxServerAuthData<AuthType> = {

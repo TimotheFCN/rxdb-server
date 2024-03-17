@@ -2,6 +2,7 @@ import { ensureNotFalsy, flatClone } from 'rxdb/plugins/utils';
 import { RxServer } from './rx-server.ts';
 import { RxServerAuthHandler, RxServerOptions } from './types.ts';
 import express from 'express';
+import cors from 'cors';
 import {
     Server as HttpServer
 } from 'http';
@@ -40,8 +41,13 @@ export async function startRxServer<AuthType>(options: RxServerOptions<AuthType>
         authHandler,
         httpServer,
         ensureNotFalsy(options.serverApp),
-        options.cors
     );
+
+    server.expressApp.use(cors({
+        origin: options.origin,
+        //Credentials are not allowed in wildcarded origins
+        credentials: options.origin === '*' ? false : true,
+    }));
 
     return server;
 }

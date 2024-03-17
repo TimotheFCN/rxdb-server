@@ -33,7 +33,6 @@ import {
     getDocAllowedMatcher,
     mergeServerDocumentFieldsMonad,
     removeServerOnlyFieldsMonad,
-    setCors,
     writeSSEHeaders
 } from './helper.ts';
 
@@ -55,9 +54,7 @@ export class RxServerReplicationEndpoint<AuthType, RxDocType> implements RxServe
         queryModifier: RxServerQueryModifier<AuthType, RxDocType>,
         changeValidator: RxServerChangeValidator<AuthType, RxDocType>,
         public readonly serverOnlyFields: string[],
-        public readonly cors?: string,
     ) {
-        setCors(this.server, [this.name].join('/'), cors);
         blockPreviousVersionPaths(this.server, [this.name].join('/'), collection.schema.version);
 
         this.urlPath = [this.name, collection.schema.version].join('/');

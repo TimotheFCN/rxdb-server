@@ -25,7 +25,7 @@ export class RxServer<AuthType> {
         public readonly authHandler: RxServerAuthHandler<AuthType>,
         public readonly httpServer: HttpServer,
         public readonly expressApp: Express,
-        public readonly cors: string = '*'
+        public readonly origin: string = '*'
     ) {
         database.onDestroy.push(this.closeFn);
     }
@@ -35,12 +35,6 @@ export class RxServer<AuthType> {
         collection: RxCollection<RxDocType>,
         queryModifier?: RxServerQueryModifier<AuthType, RxDocType>,
         changeValidator?: RxServerChangeValidator<AuthType, RxDocType>,
-        /**
-         * Set a origin for allowed CORS requests.
-         * Overwrites the cors option of the server.
-         * [default='*']
-         */
-        cors?: '*' | string,
         serverOnlyFields?: string[]
     }) {
         const endpoint = new RxServerReplicationEndpoint(
@@ -49,8 +43,7 @@ export class RxServer<AuthType> {
             opts.collection,
             opts.queryModifier ? opts.queryModifier : (_a, q) => q,
             opts.changeValidator ? opts.changeValidator : () => true,
-            opts.serverOnlyFields ? opts.serverOnlyFields : [],
-            opts.cors
+            opts.serverOnlyFields ? opts.serverOnlyFields : []
         );
         this.endpoints.push(endpoint);
         return endpoint;
@@ -61,12 +54,6 @@ export class RxServer<AuthType> {
         collection: RxCollection<RxDocType>,
         queryModifier?: RxServerQueryModifier<AuthType, RxDocType>,
         changeValidator?: RxServerChangeValidator<AuthType, RxDocType>,
-        /**
-         * Set a origin for allowed CORS requests.
-         * Overwrites the cors option of the server.
-         * [default='*']
-         */
-        cors?: '*' | string,
         serverOnlyFields?: string[]
     }) {
         const endpoint = new RxServerRestEndpoint(
@@ -76,7 +63,6 @@ export class RxServer<AuthType> {
             opts.queryModifier ? opts.queryModifier : (_a, q) => q,
             opts.changeValidator ? opts.changeValidator : () => true,
             opts.serverOnlyFields ? opts.serverOnlyFields : [],
-            opts.cors
         );
         this.endpoints.push(endpoint);
         return endpoint;

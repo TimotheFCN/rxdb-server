@@ -1,5 +1,4 @@
 import { RxServer } from './rx-server';
-import expressCors from 'cors';
 import type {
     Request,
     Response,
@@ -16,25 +15,6 @@ import {
     normalizeMangoQuery,
     uniqueArray
 } from 'rxdb/plugins/core';
-
-export function setCors(
-    server: RxServer<any>,
-    path: string,
-    cors?: string
-) {
-    let useCors = cors;
-    if (!useCors) {
-        useCors = server.cors;
-    }
-    if (useCors) {
-        server.expressApp.options('/' + path + '/*', expressCors({
-            origin: useCors,
-            credentials: true,
-            // some legacy browsers (IE11, various SmartTVs) choke on 204
-            optionsSuccessStatus: 200
-        }));
-    }
-}
 
 /**
  * "block" the previous version urls and send a 426 on them so that
